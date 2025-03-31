@@ -1,4 +1,6 @@
 #include "mainwindow.h"
+#include "gamewindow.h"
+
 
 #include <QApplication>
 
