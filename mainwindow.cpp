@@ -6,7 +6,6 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QMessageBox>
-#include <iostream>
 #include <QIcon>
 
 
@@ -23,17 +22,6 @@ MainWindow::MainWindow(QWidget *parent)
     this->setMaximumSize(w,h);
     this->setMinimumSize(w,h);
 
-    /*ui->pushButton_start->setStyleSheet("QPushButton{background-color: rgb(23, 255, 23);"
-                                        "border: solid;"
-                                        "border-color: rgb(255, 255, 255);"
-                                        "border-width: 4px;"
-                                        "border-radius: 30px;"
-                                        "font: 700 italic 28pt;"
-                                        "position:relative;\ntext-align: center;"
-                                        "qproperty-iconAlignment: AlignCenter;"
-                                        "text-align: center;}"
-                                        "QPushButton:hover { background-color: #45a049; }");*/
-
     QMessageBox welcome;
     welcome.setText("welcome to tactcal monsters\n"
                     "made by yours truly");
@@ -41,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     welcome.setStyleSheet(
         "QMessageBox {"
-        "    background-color: black;"
+        "    background-color: #222222;"
         "    color: white;"
         "}"
         "QPushButton {"
@@ -56,6 +44,7 @@ MainWindow::MainWindow(QWidget *parent)
         );
 
     welcome.exec();
+
     ui->statusbar->setStyleSheet("color:white;"
                                  "background-color:black;");
     ui->statusbar->showMessage("Sara Sarbakhshi");
@@ -66,16 +55,40 @@ MainWindow::MainWindow(QWidget *parent)
         "background-image: url(:/pics/playBT.png);"
         "background-color: rgba(0, 0, 0, 0);"
         "border: none;"
+        "background-repeat: no-repeat;"
         "}"
         "QPushButton:hover { "
         "background-image: url(:/pics/playBT_hover.PNG);"
         "background-color: rgba(0, 0, 0, 0);"
         "border: none;"
+        "background-repeat: no-repeat;"
         " }"
         "QPushButton:pressed{"
         "background-image: url(:/pics/playBT_active.PNG);"
         "background-color: rgba(0, 0, 0, 0);"
         "border: none;"
+        "background-repeat: no-repeat;"
+        " }"
+        );
+
+    ui->pushButton_play->setStyleSheet(
+        "QPushButton {"
+        "background-image: url(:/pics/playBT.png);"
+        "background-color: rgba(0, 0, 0, 0);"
+        "border: none;"
+        "background-repeat: no-repeat;"
+        "}"
+        "QPushButton:hover { "
+        "background-image: url(:/pics/playBT_hover.PNG);"
+        "background-color: rgba(0, 0, 0, 0);"
+        "border: none;"
+        "background-repeat: no-repeat;"
+        " }"
+        "QPushButton:pressed{"
+        "background-image: url(:/pics/playBT_active.PNG);"
+        "background-color: rgba(0, 0, 0, 0);"
+        "border: none;"
+        "background-repeat: no-repeat;"
         " }"
         );
 
@@ -95,6 +108,5 @@ void MainWindow::on_pushButton_play_clicked()
     hide();
     game=new gameWindow(this);
     game->show();
-
 }
 

@@ -2,7 +2,19 @@
     <qresource prefix="/pics">
         <file>splashBG.jpg</file>
         <file>playBT.png</file>
-        <file>playBT_hover.PNG</file>
+        <file>pvpBT.png</file>
+        <file>pvpBT_active.PNG</file>
+        <file>pvpBT_hover.PNG</file>
         <file>playBT_active.PNG</file>
+        <file>playBT_hover.PNG</file>
+        <file>howtoBT.png</file>
+        <file>howtoBT_active.PNG</file>
+        <file>howtoBT_hover.PNG</file>
+        <file>agentsBT.png</file>
+        <file>agentsBT_active.PNG</file>
+        <file>agentsBT_hover.PNG</file>
+        <file>blurBG.png</file>
+        <file>agentsBG.jpg</file>
+        <file>agentsTitle.png</file>
     </qresource>
 </RCC>
