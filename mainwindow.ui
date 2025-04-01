@@ -44,15 +44,15 @@ positon:fixed;</string>
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_start">
+   <widget class="QPushButton" name="pushButton_play">
     <property name="enabled">
      <bool>true</bool>
     </property>
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>540</y>
-      <width>201</width>
+      <x>260</x>
+      <y>500</y>
+      <width>241</width>
       <height>101</height>
      </rect>
     </property>
@@ -60,19 +60,10 @@ positon:fixed;</string>
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(23, 255, 23);
-border: solid;
-border-color: rgb(255, 255, 255);
-border-width: 4px;
-border-radius: 30px;
-font: 700 italic 28pt &quot;Segoe UI&quot;;
-position:relative;
-text-align: center;
-qproperty-iconAlignment: AlignCenter; text-align: center;
-</string>
+     <string notr="true"/>
     </property>
     <property name="text">
-     <string>start</string>
+     <string/>
     </property>
     <property name="autoDefault">
      <bool>false</bool>

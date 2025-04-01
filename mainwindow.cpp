@@ -1,13 +1,14 @@
 //to do: make the windows responsive
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "gamewindow.h"
 #include <QPixmap>
 #include <QDebug>
 #include <QLabel>
 #include <QPushButton>
 #include <QMessageBox>
-//#include <QStatusBar>
+#include <iostream>
+#include <QIcon>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -22,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->setMaximumSize(w,h);
     this->setMinimumSize(w,h);
 
-    ui->pushButton_start->setStyleSheet("QPushButton{background-color: rgb(23, 255, 23);"
+    /*ui->pushButton_start->setStyleSheet("QPushButton{background-color: rgb(23, 255, 23);"
                                         "border: solid;"
                                         "border-color: rgb(255, 255, 255);"
                                         "border-width: 4px;"
@@ -31,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
                                         "position:relative;\ntext-align: center;"
                                         "qproperty-iconAlignment: AlignCenter;"
                                         "text-align: center;}"
-                                        "QPushButton:hover { background-color: #45a049; }");
+                                        "QPushButton:hover { background-color: #45a049; }");*/
 
     QMessageBox welcome;
     welcome.setText("welcome to tactcal monsters\n"
@@ -58,6 +59,26 @@ MainWindow::MainWindow(QWidget *parent)
     ui->statusbar->setStyleSheet("color:white;"
                                  "background-color:black;");
     ui->statusbar->showMessage("Sara Sarbakhshi");
+
+
+    ui->pushButton_play->setStyleSheet(
+        "QPushButton {"
+        "background-image: url(:/pics/playBT.png);"
+        "background-color: rgba(0, 0, 0, 0);"
+        "border: none;"
+        "}"
+        "QPushButton:hover { "
+        "background-image: url(:/pics/playBT_hover.PNG);"
+        "background-color: rgba(0, 0, 0, 0);"
+        "border: none;"
+        " }"
+        "QPushButton:pressed{"
+        "background-image: url(:/pics/playBT_active.PNG);"
+        "background-color: rgba(0, 0, 0, 0);"
+        "border: none;"
+        " }"
+        );
+
 }
 
 
@@ -66,11 +87,14 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_pushButton_start_clicked()
+
+
+
+void MainWindow::on_pushButton_play_clicked()
 {
-    /*gameWindow Game=new gameWindow(this);
-    Game.show();
-    hide();*/
+    hide();
+    game=new gameWindow(this);
+    game->show();
 
 }
 
