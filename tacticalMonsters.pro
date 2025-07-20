@@ -12,17 +12,24 @@ SOURCES += \
     agents.cpp \
     gamewindow.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    mapwindow.cpp
 
 HEADERS += \
     agents.h \
+    characters.h \
     gamewindow.h \
-    mainwindow.h
+    hexbfs.h \
+    mainwindow.h \
+    mapwindow.h \
+    player.h \
+    tiles.h
 
 FORMS += \
     agents.ui \
     gamewindow.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    mapwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -33,5 +40,7 @@ DISTFILES += \
     .gitignore
 
 RESOURCES += \
-    images/pics.qrc \
-    images/pics.qrc
+    fonts/font.qrc \
+    maps.qrc \
+    pics.qrc
+

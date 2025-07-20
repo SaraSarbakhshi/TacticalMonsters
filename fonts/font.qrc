@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/font">
+        <file>pixelFont.ttf</file>
+    </qresource>
+    <qresource prefix="/maps"/>
+</RCC>

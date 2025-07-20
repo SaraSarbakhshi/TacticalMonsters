@@ -1,4 +1,4 @@
-//to do: make the windows responsive
+ //to do: make the windows responsive
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QPixmap>
@@ -7,6 +7,9 @@
 #include <QPushButton>
 #include <QMessageBox>
 #include <QIcon>
+#include <QFont>
+#include <QFontDatabase>
+#include <QApplication>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -14,18 +17,28 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    //loadCustomFont();
+
     this->setWindowTitle("tactical monsters");
-    QPixmap splashBG(":/pics/splashBG.jpg");
+    QPixmap splashBG(":/images/splashBG.jpg");
     int w=splashBG.width();int h=splashBG.height();
     ui->label->setScaledContents(true);
     ui->label->setGeometry(0,0,w,h);
-    this->setMaximumSize(w,h);
-    this->setMinimumSize(w,h);
+    this->setMaximumSize(1000,750);
+    this->setMinimumSize(1000,750);
 
+
+
+    int fontId = QFontDatabase::addApplicationFont(":/font/pixelFont.ttf");
+    QString fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
+    QFont customFont(fontFamily, 10);
     QMessageBox welcome;
     welcome.setText("welcome to tactcal monsters\n"
-                    "made by yours truly");
+                    "made by yours truly\n"
+                    "P.S.: it's a knock off :(");
     welcome.setWindowTitle("welcome!");
+
+    welcome.setFont(customFont);
 
     welcome.setStyleSheet(
         "QMessageBox {"
@@ -50,49 +63,47 @@ MainWindow::MainWindow(QWidget *parent)
     ui->statusbar->showMessage("Sara Sarbakhshi");
 
 
-    ui->pushButton_play->setStyleSheet(
+    ui->pushButton_start->setStyleSheet(
         "QPushButton {"
-        "background-image: url(:/pics/playBT.png);"
+        "background-image: url(:/images/startBT.png);"
         "background-color: rgba(0, 0, 0, 0);"
         "border: none;"
         "background-repeat: no-repeat;"
+        "background-position:center"
         "}"
         "QPushButton:hover { "
-        "background-image: url(:/pics/playBT_hover.PNG);"
+        "background-image: url(:/images/startBT_hover.PNG);"
         "background-color: rgba(0, 0, 0, 0);"
         "border: none;"
         "background-repeat: no-repeat;"
+        "background-position:center"
         " }"
         "QPushButton:pressed{"
-        "background-image: url(:/pics/playBT_active.PNG);"
+        "background-image: url(:/images/startBT_active.PNG);"
         "background-color: rgba(0, 0, 0, 0);"
         "border: none;"
         "background-repeat: no-repeat;"
+        "background-position:center"
         " }"
         );
-
-    ui->pushButton_play->setStyleSheet(
-        "QPushButton {"
-        "background-image: url(:/pics/playBT.png);"
-        "background-color: rgba(0, 0, 0, 0);"
-        "border: none;"
-        "background-repeat: no-repeat;"
-        "}"
-        "QPushButton:hover { "
-        "background-image: url(:/pics/playBT_hover.PNG);"
-        "background-color: rgba(0, 0, 0, 0);"
-        "border: none;"
-        "background-repeat: no-repeat;"
-        " }"
-        "QPushButton:pressed{"
-        "background-image: url(:/pics/playBT_active.PNG);"
-        "background-color: rgba(0, 0, 0, 0);"
-        "border: none;"
-        "background-repeat: no-repeat;"
-        " }"
-        );
-
 }
+
+//load custom font
+/*void mainWindow::loadCustomFont() {
+    int fontId = QFontDatabase::addApplicationFont(":/font/pixelFont.ttf");
+
+    if (fontId == -1) {
+        qWarning() << "Failed to load font!";
+        return;
+    }
+
+    QString fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
+    QFont buttonFont(fontFamily, 10);
+    QFont groupBoxFont(fontFamily, 10);
+
+    welcome->setFont(buttomFont);
+
+}*/
 
 
 MainWindow::~MainWindow()
@@ -100,10 +111,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-
-
-void MainWindow::on_pushButton_play_clicked()
+void MainWindow::on_pushButton_start_clicked()
 {
     hide();
     game=new gameWindow(this);

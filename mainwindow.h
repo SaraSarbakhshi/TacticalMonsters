@@ -21,7 +21,9 @@ public:
 private slots:
 
 
-    void on_pushButton_play_clicked();
+    void on_pushButton_start_clicked();
+    //void loadCustomFont();
+
 
 private:
     Ui::MainWindow *ui;

@@ -1,20 +1,45 @@
 <RCC>
-    <qresource prefix="/pics">
-        <file>splashBG.jpg</file>
-        <file>playBT.png</file>
-        <file>pvpBT.png</file>
-        <file>pvpBT_active.PNG</file>
-        <file>pvpBT_hover.PNG</file>
-        <file>playBT_active.PNG</file>
-        <file>playBT_hover.PNG</file>
-        <file>howtoBT.png</file>
-        <file>howtoBT_active.PNG</file>
-        <file>howtoBT_hover.PNG</file>
+    <qresource prefix="/">
+        <file>agentsBG.jpg</file>
         <file>agentsBT.png</file>
         <file>agentsBT_active.PNG</file>
         <file>agentsBT_hover.PNG</file>
-        <file>blurBG.png</file>
-        <file>agentsBG.jpg</file>
         <file>agentsTitle.png</file>
+        <file>backBT.PNG</file>
+        <file>backBT_active.PNG</file>
+        <file>backBT_hover.PNG</file>
+        <file>blurBG.png</file>
+        <file>howtoBT.png</file>
+        <file>howtoBT_active.PNG</file>
+        <file>howtoBT_hover.PNG</file>
+        <file>hunters.PNG</file>
+        <file>land.png</file>
+        <file>land-p1.png</file>
+        <file>land-p2.png</file>
+        <file>mountain.png</file>
+        <file>musicBTN_off.png</file>
+        <file>musicBTN_on.png</file>
+        <file>pics.qrc</file>
+        <file>pixelbuttons.jpg</file>
+        <file>playBT.png</file>
+        <file>playBT_active.PNG</file>
+        <file>playBT_hover.PNG</file>
+        <file>prey.PNG</file>
+        <file>pvpBT.PNG</file>
+        <file>pvpBT_active.PNG</file>
+        <file>pvpBT_hover.PNG</file>
+        <file>scroll.png</file>
+        <file>settingBTN.png</file>
+        <file>settingBTN_active.PNG</file>
+        <file>settingBTN_hover.PNG</file>
+        <file>splashBG.jpg</file>
+        <file>startBT.png</file>
+        <file>startBT_active.PNG</file>
+        <file>startBT_hover.PNG</file>
+        <file>water.png</file>
+        <file>x.png</file>
+        <file>x_active.PNG</file>
+        <file>x_hover.PNG</file>
     </qresource>
+    <qresource prefix="/new/prefix1"/>
 </RCC>

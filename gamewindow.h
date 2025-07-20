@@ -2,7 +2,7 @@
 #define GAMEWINDOW_H
 
 #include <QDialog>
-
+#include "agents.h"
 
 namespace Ui {
 class gameWindow;
@@ -17,13 +17,23 @@ public:
     ~gameWindow();
 
 private slots:
-    //void on_pushButton_HTP_clicked();
-
+    void on_pushButton_HTP_clicked();
 
     void on_pushButton_agents_clicked();
 
+    //void on_pushButton_PVP_clicked();
+
+    void on_pushButton_PVP_clicked();
+
+    void on_pushButton_X_clicked();
+    void loadCustomFont();
+
+
 private:
     Ui::gameWindow *ui;
+    //mapWindow *naghshe;
+    agents *agentsWindow;
+
 
 
 };
