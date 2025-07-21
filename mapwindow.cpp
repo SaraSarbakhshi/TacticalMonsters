@@ -108,69 +108,69 @@ mapWindow::mapWindow(QWidget *parent)
     };
 
     //name,pic,hp,dp,mobility,range
-   /*QVector<Characters*>*/characterList = {
-        new Flying("drakula", QPixmap(":/images/charachters/drakula.PNG"), 320, 120, 3, 1),//1--
+   /*QVector<Characters*>*/    characterList = {
+        new Flying("Drakula", QPixmap(":/images/charachters/drakula.PNG"), 320, 120, 3, 1),//1--
 
-        new Floating("pennyWise", QPixmap(":/images/charachters/pennyWise.PNG"), 320, 100, 3, 1),//1--
-        new Floating("valak", QPixmap(":/images/charachters/valek.PNG"), 240, 120, 3, 2),//2--
-
-
-        new WaterWalking("freddyKrueger", QPixmap(":/images/charachters/FreddyKrueger.PNG"), 320, 90, 3, 1),//1--
-        new WaterWalking("chucky", QPixmap(":/images/charachters/chucky.PNG"), 320, 80, 2, 2),//2--
-        new WaterWalking("alien", QPixmap(":/images/charachters/alien.PNG"), 400, 100, 2, 1),//3-
-        new WaterWalking("jasonVoorhees", QPixmap(":/images/charachters/jasonVoorhees.png"), 320, 100, 2, 2),//4-
-        new WaterWalking("samaraMorgan", QPixmap(":/images/charachters/samaraMorgen.png"), 400, 100, 2, 1),//5-
-        new WaterWalking("jackTorrance", QPixmap(":/images/charachters/jackTorrance.png"), 320, 90, 2, 2),//6-
-        new WaterWalking("annabelle", QPixmap(":/images/charachters/anabelle.PNG"), 320, 100, 3, 1),//7--
-        new WaterWalking("brahms", QPixmap(":/images/charachters/brahms.png"), 320, 100, 3, 1),//8-
+        new Floating("PennyWise", QPixmap(":/images/charachters/pennyWise.PNG"), 320, 100, 3, 1),//1--
+        new Floating("Valak", QPixmap(":/images/charachters/valek.PNG"), 240, 120, 3, 2),//2--
 
 
-
-        new Grounded("ghostFace", QPixmap(":/images/charachters/ghostface.PNG"), 100, 40, 2, 1),//1--
-        new Grounded("frank", QPixmap(":/images/charachters/frank.PNG"), 100, 40, 2, 1),//2--
-        new Grounded("johnKramer", QPixmap(":/images/charachters/JohnKramer.PNG"), 100, 40, 2, 1),//3--
-        new Grounded("slenderMan", QPixmap(":/images/charachters/slenderMan.png"), 100, 40, 2, 1),//4
-        new Grounded("elvira", QPixmap(":/images/charachters/elvira.png"), 100, 40, 3, 1),//5
-        new Grounded("sam", QPixmap(":/images/charachters/sam.png"), 100, 40, 2, 1),//6
-        new Grounded("leatherFace", QPixmap(":/images/charachters/leatherFace.png"), 100, 40, 2, 1),//7
-        new Grounded("michealMyers", QPixmap(":/images/charachters/michealMyers.png"), 100, 40, 2, 1),//8
-        new Grounded("death", QPixmap(":/images/charachters/death.png"), 100, 40, 2, 1),//9
-        new Grounded("hanibalLector", QPixmap(":/images/charachters/hanibalLector.png"), 100, 40, 2, 1),//10
-        new Grounded("pinHead", QPixmap(":/images/charachters/pinHead.png"), 100, 40, 3, 1),//11
-        new Grounded("artTheClown", QPixmap(":/images/charachters/artTheClown.png"), 100, 40, 2, 1),//12
-        new Grounded("estheer", QPixmap(":/images/charachters/pennyWise.PNG"), 100, 40, 2, 1),//13
-
-
-        new Flying("drakula", QPixmap(":/images/charachters/drakula.PNG"), 320, 120, 3, 1),//1--
-
-        new Floating("pennyWise", QPixmap(":/images/charachters/pennyWise.PNG"), 320, 100, 3, 1),//1--
-        new Floating("valak", QPixmap(":/images/charachters/valek.PNG"), 240, 120, 3, 2),//2--
-
-
-        new WaterWalking("freddyKrueger", QPixmap(":/images/charachters/FreddyKrueger.PNG"), 320, 90, 3, 1),//1--
-        new WaterWalking("chucky", QPixmap(":/images/charachters/chucky.PNG"), 320, 80, 2, 2),//2--
-        new WaterWalking("alien", QPixmap(":/images/charachters/alien.PNG"), 400, 100, 2, 1),//3-
-        new WaterWalking("jasonVoorhees", QPixmap(":/images/charachters/jasonVoorhees.png"), 320, 100, 2, 2),//4-
-        new WaterWalking("samaraMorgan", QPixmap(":/images/charachters/samaraMorgen.png"), 400, 100, 2, 1),//5-
-        new WaterWalking("jackTorrance", QPixmap(":/images/charachters/jackTorrance.png"), 320, 90, 2, 2),//6-
-        new WaterWalking("annabelle", QPixmap(":/images/charachters/anabelle.PNG"), 320, 100, 3, 1),//7--
-        new WaterWalking("brahms", QPixmap(":/images/charachters/brahms.png"), 320, 100, 3, 1),//8-
+        new WaterWalking("Freddy Krueger", QPixmap(":/images/charachters/FreddyKrueger.PNG"), 320, 90, 3, 1),//1--
+        new WaterWalking("Chucky", QPixmap(":/images/charachters/chucky.PNG"), 320, 80, 2, 2),//2--
+        new WaterWalking("Alien", QPixmap(":/images/charachters/alien.PNG"), 400, 100, 2, 1),//3-
+        new WaterWalking("Jason Voorhees", QPixmap(":/images/charachters/jasonVoorhees.png"), 320, 100, 2, 2),//4-
+        new WaterWalking("Samara Morgan", QPixmap(":/images/charachters/samaraMorgen.png"), 400, 100, 2, 1),//5-
+        new WaterWalking("Jack Torrance", QPixmap(":/images/charachters/jackTorrance.png"), 320, 90, 2, 2),//6-
+        new WaterWalking("Annabelle", QPixmap(":/images/charachters/anabelle.PNG"), 320, 100, 3, 1),//7--
+        new WaterWalking("Brahms", QPixmap(":/images/charachters/brahms.png"), 320, 100, 3, 1),//8-
 
 
 
-        new Grounded("ghostFace", QPixmap(":/images/charachters/ghostface.PNG"), 100, 40, 2, 1),//1--
-        new Grounded("frank", QPixmap(":/images/charachters/frank.PNG"), 100, 40, 2, 1),//2--
-        new Grounded("johnKramer", QPixmap(":/images/charachters/JohnKramer.PNG"), 100, 40, 2, 1),//3--
-        new Grounded("slenderMan", QPixmap(":/images/charachters/slenderMan.png"), 100, 40, 2, 1),//4
-        new Grounded("elvira", QPixmap(":/images/charachters/elvira.png"), 100, 40, 3, 1),//5
-        new Grounded("sam", QPixmap(":/images/charachters/sam.png"), 100, 40, 2, 1),//6
-        new Grounded("leatherFace", QPixmap(":/images/charachters/leatherFace.png"), 100, 40, 2, 1),//7
-        new Grounded("michealMyers", QPixmap(":/images/charachters/michealMyers.png"), 100, 40, 2, 1),//8
-        new Grounded("death", QPixmap(":/images/charachters/death.png"), 100, 40, 2, 1),//9
-        new Grounded("hanibalLector", QPixmap(":/images/charachters/hanibalLector.png"), 100, 40, 2, 1),//10
-        new Grounded("pinHead", QPixmap(":/images/charachters/pinHead.png"), 100, 40, 3, 1),//11
-        new Grounded("artTheClown", QPixmap(":/images/charachters/artTheClown.png"), 100, 40, 2, 1),//12
-        new Grounded("estheer", QPixmap(":/images/charachters/pennyWise.PNG"), 100, 40, 2, 1),//13
+        new Grounded("Ghost Face", QPixmap(":/images/charachters/ghostface.PNG"), 320, 110, 3, 1),//1--
+        new Grounded("Frank", QPixmap(":/images/charachters/frank.PNG"), 400, 120, 2, 1),//2--
+        new Grounded("John Kramer", QPixmap(":/images/charachters/JohnKramer.PNG"), 320, 130, 2, 1),//3--
+        new Grounded("Slender Man", QPixmap(":/images/charachters/slenderMan.png"), 400, 80, 2, 1),//4
+        new Grounded("Pyramid Head", QPixmap(":/images/charachters/pyramidHead.png"), 320, 90, 3, 1),//5
+        new Grounded("Sam", QPixmap(":/images/charachters/sam.png"), 400, 100, 2, 1),//6
+        new Grounded("Leather Face", QPixmap(":/images/charachters/leatherFace.png"), 240, 100, 2, 3),//7
+        new Grounded("Micheal Myers", QPixmap(":/images/charachters/michealMyers.png"), 160, 100, 2, 2),//8
+        new Grounded("Death", QPixmap(":/images/charachters/death.png"), 320, 140, 2, 2),//9
+        new Grounded("Hanibal Lector", QPixmap(":/images/charachters/hanibalLector.png"), 280, 80, 2, 2),//10
+        new Grounded("Pin Head", QPixmap(":/images/charachters/pinHead.png"), 400, 100, 2, 1),//11
+        new Grounded("Art The Clown", QPixmap(":/images/charachters/artTheClown.png"), 260, 80, 2, 2),//12
+        new Grounded("esther", QPixmap(":/images/charachters/esther.png"), 400, 100, 2, 1),//13
+
+
+        new Flying("Mikeyangelo", QPixmap(":/images/charachters/mikeyangelo.png"), 320, 120, 3, 1),//1--
+
+        new Floating("Alice Abernathy", QPixmap(":/images/charachters/aliceAbernathy.png"), 320, 100, 3, 1),//1--
+        new Floating("Inspector Gadget", QPixmap(":/images/charachters/inspectorGadget.png"), 240, 120, 3, 2),//2--
+
+
+        new WaterWalking("Indiana Jones", QPixmap(":/images/charachters/IndianaJones.PNG"), 320, 90, 3, 1),//1--
+        new WaterWalking("Lara Croft", QPixmap(":/images/charachters/laraCroft.png"), 320, 80, 2, 2),//2--
+        new WaterWalking("Jesus", QPixmap(":/images/charachters/jesus.png"), 400, 100, 2, 1),//3-
+        new WaterWalking("Garalt", QPixmap(":/images/charachters/garalt.png"), 320, 100, 2, 2),//4-
+        new WaterWalking("Constantine", QPixmap(":/images/charachters/constantine.png"), 400, 100, 2, 1),//5-
+        new WaterWalking("Luke Skywalker", QPixmap(":/images/charachters/luke.png"), 320, 90, 2, 2),//6-
+        new WaterWalking("Sarah Conner", QPixmap(":/images/charachters/sarahConner.png"), 320, 100, 3, 1),//7--
+        new WaterWalking("Ellen Ripley.", QPixmap(":/images/charachters/ellenRipley.png"), 320, 100, 3, 1),//8-
+
+
+
+        new Grounded("April O'Neil", QPixmap(":/images/charachters/aprilONeil.png"), 320, 110, 3, 1),//1--
+        new Grounded("Hellboy", QPixmap(":/images/charachters/hellboy.png"), 400, 120, 2, 1),//2--
+        new Grounded("John Mc Clane", QPixmap(":/images/charachters/JohnMcClane.PNG"), 320, 130, 2, 1),//3--
+        new Grounded("Lankester Merrin", QPixmap(":/images/charachters/lankesterMerrin.png"), 400, 80, 2, 1),//4
+        new Grounded("Marty Mc Fly", QPixmap(":/images/charachters/MartyMcFly.PNG"), 320, 90, 2, 1),//5
+        new Grounded("Rambo", QPixmap(":/images/charachters/rambo.PNG"), 400, 100, 2, 1),//6
+        new Grounded("Alex James Murphy", QPixmap(":/images/charachters/alexJamesMurphy.png"), 240, 100, 2, 3),//7
+        new Grounded("Van Helsing", QPixmap(":/images/charachters/vanHsesing.png"), 160, 100, 2, 2),//8
+        new Grounded("T-800", QPixmap(":/images/charachters/T800.png"), 320, 140, 2, 2),//9
+        new Grounded("Casey Jones", QPixmap(":/images/charachters/caseyJones.png"), 280, 80, 2, 2),//10
+        new Grounded("Rockey Bolboa", QPixmap(":/images/charachters/RockyBalboa.PNG"), 400, 100, 2, 1),//11
+        new Grounded("Peter Venkman", QPixmap(":/images/charachters/peterVenkman.png"), 260, 80, 2, 2),//12
+        new Grounded("Tree Gelbman", QPixmap(":/images/charachters/treeGelbman.png"), 400, 100, 2, 1),//13
 
     };
 
@@ -1426,60 +1426,61 @@ void mapWindow::actualGame() {
                 m_selectedIcon = m_tilesB[i]->icon();
                 can(m_selectedPlayerButtonIndex,tilesList[i].type,isPlayer1Turn);
             });
-
-            for(int i=0;i<41;i++){
-                connect(m_tilesB[i], &QPushButton::clicked, this, [this, i]() {
-                    selectedTo = i;
-
-                    if(tilesList[selectedTo].occupiedByIndex == 100){//destination is empty
-                        m_tilesB[selectedTo]->setIcon(m_selectedIcon);
-                        m_tilesB[selectedFrom]->setIcon(QIcon());
-
-                        tilesList[selectedTo].occupiedByIndex = tilesList[selectedFrom].occupiedByIndex;
-                        tilesList[selectedFrom].occupiedByIndex = 100;
-
-                        tilesList[selectedTo].type = tilesList[selectedFrom].type;
-                        tilesList[selectedFrom].type = 100;
-                    }
-
-                    int charIndexTo = tilesList[selectedTo].occupiedByIndex;
-
-                    if((charIndexTo < 24 && isPlayer1Turn) || (charIndexTo >= 24 && !isPlayer1Turn)){//destination has a character from the same player
-                        actualGame();
-                    }
-
-
-                    if((charIndexTo < 24 && !isPlayer1Turn) || (charIndexTo >= 24 && isPlayer1Turn)){//destination has a character from the opposing player
-                        //attack(characterList[selectedFrom],characterList[selectedTo]);
-                        Characters* attacker = characterList[selectedFrom];
-                        Characters* defender = characterList[selectedTo];
-                        int moveAttackerHere;
-
-                        attacker->attack(*defender);
-                        if(defender->health <= 0){//if defender is unalived
-                            m_tilesB[selectedTo]->setIcon(QIcon());
-                            tilesList[selectedTo].occupiedByIndex = 100;
-                        }
-                        else if(attacker->health <= 0){//if attacker is unalived
-                            m_tilesB[selectedFrom]->setIcon(QIcon());
-                            tilesList[selectedFrom].occupiedByIndex = 100;
-                        }
-                        else{//if neither is unalived
-                            moveAttackerHere = afterAttackMovement(selectedTo,tilesList[selectedFrom].type);
-
-                            m_tilesB[selectedFrom]->setIcon(QIcon());
-                            m_tilesB[moveAttackerHere]->setIcon(m_selectedIcon);
-
-                            tilesList[moveAttackerHere].type = tilesList[selectedFrom].type ;
-                            tilesList[selectedFrom].type = 100;
-
-                            tilesList[moveAttackerHere].occupiedByIndex = tilesList[selectedFrom].occupiedByIndex;
-                            tilesList[selectedFrom].occupiedByIndex = 100;
-                        }
-                    }
-                });
-            }
         }
+
+        for(int i=0;i<41;i++){
+            connect(m_tilesB[i], &QPushButton::clicked, this, [this, i]() {
+                selectedTo = i;
+
+                if(tilesList[selectedTo].occupiedByIndex == 100){//destination is empty
+                    m_tilesB[selectedTo]->setIcon(m_selectedIcon);
+                    m_tilesB[selectedFrom]->setIcon(QIcon());
+
+                    tilesList[selectedTo].occupiedByIndex = tilesList[selectedFrom].occupiedByIndex;
+                    tilesList[selectedFrom].occupiedByIndex = 100;
+
+                    tilesList[selectedTo].type = tilesList[selectedFrom].type;
+                    tilesList[selectedFrom].type = 100;
+                }
+
+                int charIndexTo = tilesList[selectedTo].occupiedByIndex;
+
+                /*if((charIndexTo < 24 && isPlayer1Turn) || (charIndexTo >= 24 && !isPlayer1Turn)){//destination has a character from the same player
+                    actualGame();
+                }*/
+
+
+                if((charIndexTo < 24 && !isPlayer1Turn) || (charIndexTo >= 24 && isPlayer1Turn)){//destination has a character from the opposing player
+                    //attack(characterList[selectedFrom],characterList[selectedTo]);
+                    Characters* attacker = characterList[selectedFrom];
+                    Characters* defender = characterList[selectedTo];
+                    int moveAttackerHere;
+
+                    attacker->attack(*defender);
+                    if(defender->health <= 0){//if defender is unalived
+                        m_tilesB[selectedTo]->setIcon(QIcon());
+                        tilesList[selectedTo].occupiedByIndex = 100;
+                    }
+                    else if(attacker->health <= 0){//if attacker is unalived
+                        m_tilesB[selectedFrom]->setIcon(QIcon());
+                        tilesList[selectedFrom].occupiedByIndex = 100;
+                    }
+                    else{//if neither is unalived
+                        moveAttackerHere = afterAttackMovement(selectedTo,tilesList[selectedFrom].type);
+
+                        m_tilesB[selectedFrom]->setIcon(QIcon());
+                        m_tilesB[moveAttackerHere]->setIcon(m_selectedIcon);
+
+                        tilesList[moveAttackerHere].type = tilesList[selectedFrom].type ;
+                        tilesList[selectedFrom].type = 100;
+
+                        tilesList[moveAttackerHere].occupiedByIndex = tilesList[selectedFrom].occupiedByIndex;
+                        tilesList[selectedFrom].occupiedByIndex = 100;
+                    }
+                }
+            });
+        }
+
 
         gameOver(isPlayer1Turn);
 
@@ -1500,10 +1501,10 @@ void mapWindow::actualGame() {
 }
 
 
-    void mapWindow::on_pushButton_B02_clicked()
+    /*void mapWindow::on_pushButton_B02_clicked()
     {
         can(18,characterList[18]->type,1);
-    }
+    }*/
 
 
     void mapWindow::on_pushButton_clicked()
@@ -1525,9 +1526,9 @@ void mapWindow::actualGame() {
     }
 
 
-    void mapWindow::on_pushButton_B11_clicked()
+    /*void mapWindow::on_pushButton_B11_clicked()
     {
         can(14,characterList[14]->type,1);
 
-    }
+    }*/
 
