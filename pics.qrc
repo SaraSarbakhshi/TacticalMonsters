@@ -84,5 +84,27 @@
         <file>images/icons/next.png</file>
         <file>images/icons/previous.png</file>
         <file>images/icons/undo.png</file>
+        <file>images/charachters/alexJamesMurphy.png</file>
+        <file>images/charachters/aliceAbernathy.png</file>
+        <file>images/charachters/allanGrant.png</file>
+        <file>images/charachters/aprilONeil.png</file>
+        <file>images/charachters/caseyJones.png</file>
+        <file>images/charachters/constantine.png</file>
+        <file>images/charachters/ellenRipley.png</file>
+        <file>images/charachters/esther.png</file>
+        <file>images/charachters/garalt.png</file>
+        <file>images/charachters/inspectorGadget.png</file>
+        <file>images/charachters/lankesterMerrin.png</file>
+        <file>images/charachters/laraCroft.png</file>
+        <file>images/charachters/luke.png</file>
+        <file>images/charachters/mikeyangelo.png</file>
+        <file>images/charachters/peterVenkman.png</file>
+        <file>images/charachters/pyramidHead.png</file>
+        <file>images/charachters/sarahConner.png</file>
+        <file>images/charachters/T800.png</file>
+        <file>images/charachters/treeGelbman.png</file>
+        <file>images/charachters/vanHsesing.png</file>
+        <file>images/charachters/hellboy.png</file>
+        <file>images/charachters/jesus.png</file>
     </qresource>
 </RCC>
