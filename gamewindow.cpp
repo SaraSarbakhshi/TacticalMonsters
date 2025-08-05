@@ -12,6 +12,7 @@
 #include <QFont>
 #include <QFontDatabase>
 #include <QLabel>
+#include <QStyleFactory>
 
 
 gameWindow::gameWindow(QWidget *parent)
@@ -149,16 +150,18 @@ void gameWindow::on_pushButton_HTP_clicked()
     ui->scrollArea_2->show();
     QPixmap scroll(":/images/scroll.png");
 
-    int fontId = QFontDatabase::addApplicationFont(":/font/pixelFont.ttf");
+    /*int fontId = QFontDatabase::addApplicationFont(":/font/pixelFont.ttf");
     QString fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
     QFont customFont(fontFamily, 10);
     QMessageBox justSoUKnow;
     justSoUKnow.setText("attention! this text is the exact copy from the game itself so it is not completely acurate\n"
-                        "it's here merely cuz i wanted to\n");
-    justSoUKnow.setWindowTitle("attention!");
+                        "it's here merely cuz i wanted it to\n");
+    justSoUKnow.setWindowTitle("ATTENTION!");
 
     justSoUKnow.setFont(customFont);
+    justSoUKnow.setWindowFlag(Qt::Dialog);
 
+    justSoUKnow.setStyle(QStyleFactory::create("Fusion"));
     justSoUKnow.setStyleSheet(
         "QMessageBox {"
         "    background-color: #222222;"
@@ -175,9 +178,9 @@ void gameWindow::on_pushButton_HTP_clicked()
         "}"
         );
     /*::warning(this, "attention!","this text is the exact copy from the game itself so it is not completely acurate\n"
-                               "it's here merely cuz i wanted to\n");*/
+                               "it's here merely cuz i wanted to\n");
 
-    justSoUKnow.exec();
+    justSoUKnow.show();*/
 }
 
 void gameWindow::on_pushButton_agents_clicked()

@@ -42,25 +42,17 @@ private slots:
     void on_pushButton_setting_clicked();
 
     void on_pushButton_undo_clicked();
-    void startTurn(bool);
-    void gameOver(bool);
+    void startTurn();
+    void gameOver();
+    void toMove();
     int afterAttackMovement(int,int);
     //void endTurn();
+    //void handleMapClick(int);
 
-
-    //void on_pushButton_B02_clicked();
-
-    void on_pushButton_clicked();
-
-    void on_pushButton_2_clicked();
-
-    //void on_pushButton_B11_clicked();
+    void on_pushButton_X_clicked();
 
 private:
     Ui::mapWindow *ui;
-    /*QString p1name;
-    QString p2name;*/
-    //QVector<QPushButton*> m_playerButtons;
     QVector<QPushButton*> m_tilesB;//2nd/actual map
     QVector<QPushButton*> m_tilesB_2;//1st map
     QIcon m_selectedIcon;
@@ -74,15 +66,20 @@ private:
     int x1;
     int x2;
     int typeBTN;
-    bool isPlayer1Turn;
+    bool isPlayer1Turn = false;
     int selectedFrom = -1;
+    bool waitingForFrom = true;
     int selectedTo = -1;
     bool awaitingSelection = true;
+    player player1;
+    player player2;
+    player *currentPlayer;
+    player *otherPlayer;
+
     QVector <QGroupBox*> agentsGRPBX;
     QVector<QPushButton*> typeButtons;
     QVector<QPushButton*> agentsPics;
     QVector<Characters*> characterList;
-
 
 };
 

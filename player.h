@@ -9,7 +9,8 @@
 class player{
 public:
     QString name;
-    QVector<Characters*> playerCharacters;
+    //QVector<Characters*> playerCharacters;
+    QVector<int> playerCharactersIndex;
     QVector<int> playerTiles;
     int score;
     bool turn;
