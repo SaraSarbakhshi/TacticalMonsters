@@ -11,6 +11,8 @@
 #include "tiles.h"
 #include "characters.h"
 #include "player.h"
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 namespace Ui {
 class mapWindow;
@@ -51,6 +53,10 @@ private slots:
 
     void on_pushButton_X_clicked();
 
+    //audio
+    /*void togglePlayPause();
+    void handleError(QMediaPlayer::Error error);
+*/
 private:
     Ui::mapWindow *ui;
     QVector<QPushButton*> m_tilesB;//2nd/actual map
@@ -75,11 +81,18 @@ private:
     player player2;
     player *currentPlayer;
     player *otherPlayer;
+    int round=1;
 
     QVector <QGroupBox*> agentsGRPBX;
     QVector<QPushButton*> typeButtons;
     QVector<QPushButton*> agentsPics;
     QVector<Characters*> characterList;
+
+    //audio
+    /*QMediaPlayer *player;
+    QAudioOutput *audioOutput;
+    QSlider *volumeSlider;
+    QPushButton *playPauseButton;*/
 
 };
 

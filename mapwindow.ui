@@ -7686,7 +7686,7 @@ border:3px dotted white;
       <string/>
      </property>
     </widget>
-    <widget class="QSlider" name="horizontalSlider">
+    <widget class="QSlider" name="volumeSlider">
      <property name="geometry">
       <rect>
        <x>90</x>
@@ -7703,10 +7703,10 @@ border:3px dotted white;
    <widget class="QGroupBox" name="groupBox_gameOver">
     <property name="geometry">
      <rect>
-      <x>440</x>
-      <y>10</y>
-      <width>191</width>
-      <height>151</height>
+      <x>330</x>
+      <y>130</y>
+      <width>360</width>
+      <height>320</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -7721,12 +7721,15 @@ border:3px dotted white;
       <rect>
        <x>20</x>
        <y>80</y>
-       <width>131</width>
+       <width>141</width>
        <height>61</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true">border:1px solid white;
+border:transparent;
+background:transparent;
+
 </string>
      </property>
      <property name="text">
@@ -7736,20 +7739,82 @@ border:3px dotted white;
     <widget class="QLabel" name="label_victoryDance">
      <property name="geometry">
       <rect>
-       <x>50</x>
+       <x>20</x>
        <y>20</y>
-       <width>81</width>
-       <height>51</height>
+       <width>320</width>
+       <height>194</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border:transparent;
+background:transparent;</string>
      </property>
      <property name="text">
       <string/>
      </property>
     </widget>
    </widget>
+   <widget class="QLabel" name="label_whoseTurn">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>311</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <zorder>pushButton_B00</zorder>
+   <zorder>pushButton_B01</zorder>
+   <zorder>pushButton_B11</zorder>
+   <zorder>pushButton_B04</zorder>
+   <zorder>pushButton_B03</zorder>
+   <zorder>pushButton_B02</zorder>
+   <zorder>pushButton_B10</zorder>
+   <zorder>pushButton_B13</zorder>
+   <zorder>pushButton_B12</zorder>
+   <zorder>pushButton_B33</zorder>
+   <zorder>pushButton_B31</zorder>
+   <zorder>pushButton_B24</zorder>
+   <zorder>pushButton_B21</zorder>
+   <zorder>pushButton_B22</zorder>
+   <zorder>pushButton_B32</zorder>
+   <zorder>pushButton_B30</zorder>
+   <zorder>pushButton_B20</zorder>
+   <zorder>pushButton_B23</zorder>
+   <zorder>pushButton_B53</zorder>
+   <zorder>pushButton_B51</zorder>
+   <zorder>pushButton_B44</zorder>
+   <zorder>pushButton_B41</zorder>
+   <zorder>pushButton_B42</zorder>
+   <zorder>pushButton_B52</zorder>
+   <zorder>pushButton_B50</zorder>
+   <zorder>pushButton_B40</zorder>
+   <zorder>pushButton_B43</zorder>
+   <zorder>pushButton_B73</zorder>
+   <zorder>pushButton_B71</zorder>
+   <zorder>pushButton_B64</zorder>
+   <zorder>pushButton_B61</zorder>
+   <zorder>pushButton_B62</zorder>
+   <zorder>pushButton_B72</zorder>
+   <zorder>pushButton_B70</zorder>
+   <zorder>pushButton_B60</zorder>
+   <zorder>pushButton_B63</zorder>
+   <zorder>pushButton_B84</zorder>
+   <zorder>pushButton_B81</zorder>
+   <zorder>pushButton_B82</zorder>
+   <zorder>pushButton_B80</zorder>
+   <zorder>pushButton_B83</zorder>
+   <zorder>pushButton_setting</zorder>
+   <zorder>groupBox_gameOver</zorder>
+   <zorder>label_whoseTurn</zorder>
+   <zorder>groupBox_setting</zorder>
   </widget>
-  <zorder>groupBox_bigMap</zorder>
   <zorder>groupBox_map</zorder>
+  <zorder>groupBox_bigMap</zorder>
   <zorder>groupBox_p1agents</zorder>
   <zorder>groupBox_p2agents</zorder>
  </widget>

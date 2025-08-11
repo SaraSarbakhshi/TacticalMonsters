@@ -25,6 +25,9 @@
 #include <QSet>
 #include <QPair>
 #include <QMovie>
+#include <QMediaPlayer>
+#include <QAudioOutput>
+
 
 
 struct hex
@@ -35,8 +38,10 @@ struct hex
     bool crossable;
     bool visited = false;
     int distance = 100;
+    int BWR = 0;
+    bool canStayThere = true;
 
-    hex(int r=0,int c=0) : row(r),column(c),visited(false),distance(100),crossable(true){}
+    hex(int r=0,int c=0) : row(r),column(c),visited(false),distance(100),crossable(true),BWR(0),canStayThere(true){}
 };
 
 QVector<QVector<hex>> board(9);
@@ -53,6 +58,25 @@ mapWindow::mapWindow(QWidget *parent)
     ui->groupBox_gameOver->hide();
     //ui->groupBox_GO->hide();
 
+
+
+    //audio
+    /*QWidget *centralWidget = new QWidget(this);
+    QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
+
+    player = new QMediaPlayer(this);
+    audioOutput = new QAudioOutput(this);
+    player->setAudioOutput(audioOutput);
+
+
+    connect(ui->volumeSlider, &QSlider::valueChanged, [this](int value) {
+        audioOutput->setVolume(value / 100.0f);
+    });*/
+
+
+
+
+    //end of audio
 
 
     ui->pushButton_setting->setStyleSheet(
@@ -240,6 +264,20 @@ mapWindow::~mapWindow()
     qDeleteAll(characterList);
 
 }
+
+//play audio
+/*void mapWindow::playMedia() {
+    if (player->source().isEmpty()) {
+        // Set your MP3 file path here
+        //player->setSource(QUrl::fromLocalFile("C:/Music/example.mp3"));
+
+        // Or for files in resources:
+        player->setSource(QUrl("qrc:/audio/song.mp3"));
+    }
+    player->play();
+    audioOutput->setVolume(0.5f);
+
+}*/
 
 //beautify
 void mapWindow::beautify(){
@@ -442,6 +480,9 @@ QString mapWindow::loadRandomMap() {
     int randomIndex = QRandomGenerator::global()->bounded(availableMaps.size());
     QString selectedPath = availableMaps.at(randomIndex);
 
+    qDebug()<<"map chosen"<<randomIndex;
+
+
     // Show the selected index and file path
     /*QMessageBox::information(this, "Random Map Selected",
                              QString("Index: %1\nPath: %2").arg(randomIndex).arg(selectedPath));*/
@@ -482,6 +523,8 @@ void mapWindow::loadCustomFont() {
     ui->groupBox_p2agents->setFont(groupBoxFont);
     ui->pushButton_p1all->setFont(groupBoxFont);
     ui->pushButton_p2all->setFont(groupBoxFont);
+    ui->label_whoseTurn->setFont(buttonFont);
+    ui->label_gameover->setFont(groupBoxFont);
 
 }
 
@@ -718,6 +761,14 @@ void mapWindow::setCharacters() {
                     }
                 }
                 if(p2Count==5 && p1Count==5){
+
+                //this is just cuz i dont neeed them to b different no more
+                    for(int i=0;i<41;i++){
+                        if(tilesList[i].landscape == 1 || tilesList[i].landscape == 2){
+                            tilesList[i].landscape = 3;
+                        }
+                    }
+
                     ui->pushButton_allChosen->show();
                     actualGame();
                 }
@@ -898,12 +949,12 @@ void mapWindow::on_pushButton_undo_clicked()
 //check if they can go there
 void mapWindow::can(int fromIndex,int type,bool isPlayer1Turn){
 
-    //this is just cuz i dont neeed them to b different no more
+    /*//this is just cuz i dont neeed them to b different no more
     for(int i=0;i<41;i++){
         if(tilesList[i].landscape == 1 || tilesList[i].landscape == 2){
             tilesList[i].landscape = 3;
         }
-    }
+    }*/
 
     //to reset everything back to how they were
     for(int i=0;i<41;i++){
@@ -962,16 +1013,26 @@ void mapWindow::can(int fromIndex,int type,bool isPlayer1Turn){
                 case 1://grounded
                     if(tilesList[index].landscape != 3){//if it was not normal land
                         board[i][j].crossable = false;
+                        board[i][j].canStayThere = false;
+
                     }
                     break;
                 case 2://water walking
                     if(tilesList[index].landscape == 5){//if it was mountain
                         board[i][j].crossable = false;
+                        board[i][j].canStayThere = false;
                     }
                     break;
                 case 3://floating
+                    board[i][j].crossable = true;//can cross everyhthing
+                    board[i][j].canStayThere = true;//can stay everyehere
+
+
                 case 4://flying
                     board[i][j].crossable = true;//can cross everyhthing
+                    if(tilesList[index].landscape != 3){//if it was not normal land
+                        board[i][j].canStayThere = false;
+                    }
                     break;
             }
             if(index == fromIndex){
@@ -1053,23 +1114,18 @@ void mapWindow::can(int fromIndex,int type,bool isPlayer1Turn){
     index=0;
     int mobility = characterList[tilesList[fromIndex].occupiedByIndex]->mobility;
     //qDebug()<<"mobility"<<mobility;
-    while(index<41){
+   // while(index<41){
         for(int i=0;i<9;i++){
             for(int j=0;j<board[i].size();j++){
-
-
                 if(board[i][j].distance <= mobility){
                     QString currentStyle = m_tilesB[index]->styleSheet();
                     m_tilesB[index]->setStyleSheet(currentStyle + "border: 3px solid white;");
                     m_tilesB[index]->setEnabled(true);
                     //here
-                    QIcon originalIcon = m_tilesB[i]->icon();
-                    m_tilesB[i]->setIcon(QIcon()); // clear first
-                    m_tilesB[i]->setIcon(originalIcon); // re-apply
-
-
+                    QIcon originalIcon = m_tilesB[index]->icon();
+                    m_tilesB[index]->setIcon(QIcon()); // clear first
+                    m_tilesB[index]->setIcon(originalIcon); // re-apply
                 }
-
                 else{
                     m_tilesB[index]->setEnabled(false);
 
@@ -1080,18 +1136,17 @@ void mapWindow::can(int fromIndex,int type,bool isPlayer1Turn){
                 else if(!isPlayer1Turn && tilesList[index].occupiedByIndex >= 24){
                     m_tilesB[index]->setEnabled(true);
                 }
-
                 index++;
             }
         }
-    }
+    //}
 
 
     int range =  (characterList[tilesList[fromIndex].occupiedByIndex]->range) * 90 * 1.5;
     //qDebug()<<"ragne  = "<<range;
     for(int i=0;i<9;i++){
         for(int j=0;j<board[i].size();j++){
-            if(board[i][j].distance == mobility) {
+            if(board[i][j].distance <= mobility) {
                 int centerX = m_tilesB[board[i][j].index]->geometry().center().x();
                 int centerY = m_tilesB[board[i][j].index]->geometry().center().y();
                 //qDebug()<<i<<" * "<<j;
@@ -1117,9 +1172,19 @@ void mapWindow::can(int fromIndex,int type,bool isPlayer1Turn){
 
                         if (distanceSquared <= range * range && board[k][l].distance > mobility){
                             //qDebug()<<"done!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1";
-                            QString currentStyle = m_tilesB[index]->styleSheet();
-                            m_tilesB[index]->setStyleSheet(currentStyle + "border: 3px solid red;");
-                            m_tilesB[index]->setEnabled(true);
+
+                            if(!tilesList[index].isEmpty){
+                                QString currentStyle = m_tilesB[index]->styleSheet();
+                                m_tilesB[index]->setStyleSheet(currentStyle + "border: 3px solid pink;");
+                                m_tilesB[index]->setEnabled(true);
+                                board[i][j].BWR = 2;
+                            }
+                            else if(tilesList[index].isEmpty){
+                                QString currentStyle = m_tilesB[index]->styleSheet();
+                                m_tilesB[index]->setStyleSheet(currentStyle + "border: 3px solid red;");
+                                m_tilesB[index]->setEnabled(false);
+
+                            }
                         }
                         index++;
                     }
@@ -1127,207 +1192,43 @@ void mapWindow::can(int fromIndex,int type,bool isPlayer1Turn){
             }
         }
     }
+
+    /*index = 0;
+    for(int i=0;i<9;i++){
+        for(int j=0;j<board[i].size();j++){
+            qDebug()<<"can stay there"<<index<<"-->"<<board[i][j].canStayThere;
+            index++;
+        }
+    }*/
+}
+
+void mapWindow::gameOver() {
+    QMovie *movie = new QMovie(":/images/victoryDance.gif", QByteArray(), this);
+
+    // Set label size to match GIF’s size
+    movie->start();
+    ui->label_victoryDance->setMovie(movie);
+    ui->label_victoryDance->resize(movie->currentImage().size());
+
+    QSize gifSize = movie->frameRect().size();
+
+    qDebug() << "GIF size:" << gifSize.width() << "x" << gifSize.height();
+
+
+    ui->groupBox_gameOver->show();
+    if (isPlayer1Turn) {
+        ui->label_gameover->setText("GAME OVER!\n" + player1.name + " won");
+    } else {
+        ui->label_gameover->setText("GAME OVER!\n" + player2.name + " won");
+    }
 }
 
 
-    /*index = 0;
-    int index2;
-    while(index < 41){
-        index2 = 0;
-        while(index2 < 41){
-            for(int i=0;i<9;i++){
-                for(int j=0;j<board[i].size();j++){
-                    if(board[i][j].distance == mobility){
-                        int centerX = m_tilesB[index]->geometry().center().x();
-                        int centerY = m_tilesB[index]->geometry().center().y();
-
-                        int targetX = m_tilesB[index2]->geometry().center().x();
-                        int targetY = m_tilesB[index2]->geometry().center().y();
-
-                        int dx = targetX - centerX;
-                        int dy = targetY - centerY;
-
-                        int distanceSquared = dx * dx + dy * dy;
-
-                        if (distanceSquared <= range * range && board[i][j].distance > mobility){
-                            QString currentStyle = m_tilesB[index2]->styleSheet();
-                            m_tilesB[index2]->setStyleSheet(currentStyle + "border: 3px solid pink;");
-                            //m_tilesB[j]->setStyleSheet("border:1.5px solid red;");
-                            m_tilesB[index2]->setEnabled(true);
-                        }
-                    }
-                }
-            }
-            index2++;
-        }
-        index++;
-    }*/
-        /*if(board[i].distance == mobility){
-            int centerX = m_tilesB[i]->geometry().center().x();
-            int centerY = m_tilesB[i]->geometry().center().y();
-            for(int j=0;j<41;j++){
-                int targetX = m_tilesB[j]->geometry().center().x();
-                int targetY = m_tilesB[j]->geometry().center().y();
-                int dx = targetX - centerX;
-                int dy = targetY - centerY;
-                int distanceSquared = dx * dx + dy * dy;
-                if (distanceSquared <= range * range && board[j].distance > mobility){
-                    QString currentStyle = m_tilesB[i]->styleSheet();
-                    m_tilesB[i]->setStyleSheet(currentStyle + "border: 3px solid pink;");
-                    //m_tilesB[j]->setStyleSheet("border:1.5px solid red;");
-                    m_tilesB[j]->setEnabled(true);
-                }
-            }*/
 
 
 
-    /*index = 0;
-    while(index<41){
-        for(int i=0;i<9;i++){
-            for(int j=0;j<board[i].size();i+j++){
-
-            }
-        }
-    }*/
-
-    /*index = 0;
-    while(index<41){
-        for(int i=0;i<9;i++){
-            for(int j=0;j<board[i].size();j++){
-                if(board[i][j].distance > mobility && board[i][j].distance < mobility + range){
-                    m_tilesB[index]->setEnabled(true);
-                    QString currentStyle = m_tilesB[index]->styleSheet();
-                    m_tilesB[index]->setStyleSheet(currentStyle + "border: 3px solid red;");
-                    //m_tilesB[i]->setStyleSheet("border:1.5px solid green;");
-                }
-                index++;
-            }
-        }
-    }*/
-
-
-
-
-    /*const int hexDirectionIndex[6] = {-5, -9, -4, 5, 9, 4};//up left - up - up right - down right - down - down left
-
-
-    hexGrid board[41];
-    for(int i=0;i<41;i++){
-        board[i].column = tilesList[i].column;
-        board[i].visited = false;
-        board[i].distance = 100;
-        board[i].index = i;
-        //board[i].crossable = true;
-        switch (type) {
-        case 1://grounded
-            if(tilesList[i].landscape != 3){//if it was not normal land
-                board[i].crossable = false;
-            }
-            break;
-        case 2://water walking
-            if(tilesList[i].landscape == 5){//if it was mountain
-                board[i].crossable = false;
-            }
-            break;
-        case 3://floating
-                board[i].crossable = true;//can cross everyhthing
-            break;
-        case 4://flying
-                board[i].crossable = true;//can cross everyhthing
-            break;
-            }
-    }
-        board[fromIndex].visited = true;
-        board[fromIndex].distance = 0;
-        hexGrid current = board[fromIndex];
-        hexGrid neighbor;
-
-
-        for(int j=0;j<6;j++){
-            for(int i=0;i<6;i++){
-                if(current.index + hexDirectionIndex[i] < 41 && current.index + hexDirectionIndex[i] > -1){
-                    neighbor = board[current.index + hexDirectionIndex[i]];
-                    if(board[neighbor.index].crossable == false){
-                        board[neighbor.index].visited = true;
-                    }
-                    else if(current.index == 18){
-                        int minVal = std::min({board[9].distance,
-                                               board[14].distance,
-                                               board[23].distance,
-                                               board[27].distance});
-                    }
-                    else{
-                        neighbor.visited = true;
-                        int minVal = std::min( {board[neighbor.index + hexDirectionIndex[0]].distance,
-                                               board[neighbor.index + hexDirectionIndex[1]].distance,
-                                               board[neighbor.index + hexDirectionIndex[2]].distance,
-                                               board[neighbor.index + hexDirectionIndex[3]].distance,
-                                               board[neighbor.index + hexDirectionIndex[4]].distance,
-                                               board[neighbor.index + hexDirectionIndex[5]].distance});
-                        if(board[neighbor.index].distance > minVal + 1){
-                            board[neighbor.index].distance = minVal + 1;
-                        }
-                    }
-                }
-            }
-            if(current.index + hexDirectionIndex[j] < 41 && current.index + hexDirectionIndex[j] > -1){
-                current = board[current.index + hexDirectionIndex[j]];
-            }
-        }
-
-
-    int mobility = characterList[tilesList[fromIndex].occupiedByIndex]->mobility;
-    for(int i=0;i<41;i++){
-        if(board[i].distance < mobility){
-            m_tilesB[i]->setEnabled(true);
-            QString currentStyle = m_tilesB[i]->styleSheet();
-            m_tilesB[i]->setStyleSheet(currentStyle + "border: 3px solid white;");
-            //m_tilesB[i]->setStyleSheet("border:1.5px solid green;");
-        }
-    }
-
-    int range = characterList[tilesList[fromIndex].occupiedByIndex]->range;
-    for(int i=0;i<41;i++){
-        if(board[i].distance > mobility && board[i].distance < mobility + range){
-            m_tilesB[i]->setEnabled(true);
-            QString currentStyle = m_tilesB[i]->styleSheet();
-            m_tilesB[i]->setStyleSheet(currentStyle + "border: 3px solid cyan;");
-            //m_tilesB[i]->setStyleSheet("border:1.5px solid green;");
-        }
-    }
-
-    for(int i=0;i<41;i++){
-        if(board[i].distance == mobility){
-            int centerX = m_tilesB[i]->geometry().center().x();
-            int centerY = m_tilesB[i]->geometry().center().y();
-            for(int j=0;j<41;j++){
-                int targetX = m_tilesB[j]->geometry().center().x();
-                int targetY = m_tilesB[j]->geometry().center().y();
-                int dx = targetX - centerX;
-                int dy = targetY - centerY;
-                int distanceSquared = dx * dx + dy * dy;
-                if (distanceSquared <= range * range && board[j].distance > mobility){
-                    QString currentStyle = m_tilesB[i]->styleSheet();
-                    m_tilesB[i]->setStyleSheet(currentStyle + "border: 3px solid pink;");
-                    //m_tilesB[j]->setStyleSheet("border:1.5px solid red;");
-                    m_tilesB[j]->setEnabled(true);
-                }
-            }
-        }
-    }*/
-//}
-
-
-
-
-
-
-
-
-
-
-
-void mapWindow::gameOver(){
+//will i ever 4get this??
+/*void mapWindow::gameOver(){
 
     QLabel *gifLabel = new QLabel(this); // Or use an existing QLabel from the UI
     QMovie *movie = new QMovie(":/images/victoryDance.gif"); // or "loading.gif" if not using resources
@@ -1345,208 +1246,22 @@ void mapWindow::gameOver(){
         ui->label_gameover->setText("GAME OVER!\n"
                                     +player2.name+"won");
     }
-}
+}*/
 
-
+//work in progress! should i have a save btn as well? music??
 void mapWindow::on_pushButton_X_clicked()
 {
     ui->groupBox_setting->hide();
 }
 
 
-
-
-
-/*void mapWindow::handleMapClick(int i) {
-    if (waitingForFrom) {
-        // Ignore click if tile is empty or not your character
-        int charIndex = tilesList[i].occupiedByIndex;
-        if (charIndex == 100) return;
-
-        if ((isPlayer1Turn && charIndex >= 24) || (!isPlayer1Turn && charIndex < 24)) return;
-
-        selectedFrom = i;
-        m_selectedIcon = m_tilesB[i]->icon();
-        can(m_selectedPlayerButtonIndex, tilesList[i].type, isPlayer1Turn); // highlight moves
-        waitingForFrom = false;
-    } else {
-        int selectedTo = i;
-
-        if (selectedTo == selectedFrom) return; // ignore clicking same tile
-
-        // CASE 1: Move
-        if (tilesList[selectedTo].occupiedByIndex == 100) {
-            m_tilesB[selectedTo]->setIcon(m_selectedIcon);
-            m_tilesB[selectedFrom]->setIcon(QIcon());
-
-            tilesList[selectedTo].occupiedByIndex = tilesList[selectedFrom].occupiedByIndex;
-            tilesList[selectedFrom].occupiedByIndex = 100;
-
-            tilesList[selectedTo].type = tilesList[selectedFrom].type;
-            tilesList[selectedFrom].type = 100;
-        }
-
-        // CASE 2: Attack
-        else {
-            int charIndexTo = tilesList[selectedTo].occupiedByIndex;
-            bool isOpponent = (charIndexTo < 24 && !isPlayer1Turn) || (charIndexTo >= 24 && isPlayer1Turn);
-            if (!isOpponent) return;
-
-            Characters* attacker = characterList[selectedFrom];
-            Characters* defender = characterList[selectedTo];
-
-            attacker->attack(*defender);
-            if (defender->health <= 0) {
-                m_tilesB[selectedTo]->setIcon(QIcon());
-                tilesList[selectedTo].occupiedByIndex = 100;
-            } else if (attacker->health <= 0) {
-                m_tilesB[selectedFrom]->setIcon(QIcon());
-                tilesList[selectedFrom].occupiedByIndex = 100;
-            } else {
-                int moveTo = afterAttackMovement(selectedTo, tilesList[selectedFrom].type);
-                m_tilesB[selectedFrom]->setIcon(QIcon());
-                m_tilesB[moveTo]->setIcon(m_selectedIcon);
-
-                tilesList[moveTo].occupiedByIndex = tilesList[selectedFrom].occupiedByIndex;
-                tilesList[selectedFrom].occupiedByIndex = 100;
-
-                tilesList[moveTo].type = tilesList[selectedFrom].type;
-                tilesList[selectedFrom].type = 100;
-            }
-        }
-
-        // reset turn state
-        selectedFrom = -1;
-        waitingForFrom = true;
-
-        gameOver();
-
-        // next turn
-        isPlayer1Turn = !isPlayer1Turn;
-        startTurn();
-    }
-}*/
-
-
-
-//actual game
-/*void mapWindow::actualGame() {
-    player1.turn = true; player2.turn = false;
-    isPlayer1Turn = false;
-    while(!player1.playerCharacters.empty() || !player2.playerCharacters.empty()){
-        isPlayer1Turn = !isPlayer1Turn;
-        for(int i=0;i<41;i++){
-            startTurn(isPlayer1Turn);
-            if(player1.turn) {
-                m_tilesB[player1.playerTiles[i]]->setEnabled(true);
-            }
-            else if(player2.turn){
-                m_tilesB[player2.playerTiles[i]]->setEnabled(true);
-            }
-            else{
-                m_tilesB[i]->setEnabled(false);
-            }
-
-            connect(m_tilesB[i], &QPushButton::clicked, this, [this, i]() {
-                selectedFrom = i;
-                m_selectedIcon = m_tilesB[i]->icon();
-                can(m_selectedPlayerButtonIndex,tilesList[i].type,isPlayer1Turn);
-            });
-        }
-
-        for(int i=0;i<41;i++){
-            connect(m_tilesB[i], &QPushButton::clicked, this, [this, i]() {
-                selectedTo = i;
-
-                if(tilesList[selectedTo].occupiedByIndex == 100){//destination is empty
-                    m_tilesB[selectedTo]->setIcon(m_selectedIcon);
-                    m_tilesB[selectedFrom]->setIcon(QIcon());
-
-                    tilesList[selectedTo].occupiedByIndex = tilesList[selectedFrom].occupiedByIndex;
-                    tilesList[selectedFrom].occupiedByIndex = 100;
-
-                    tilesList[selectedTo].type = tilesList[selectedFrom].type;
-                    tilesList[selectedFrom].type = 100;
-                }
-
-                int charIndexTo = tilesList[selectedTo].occupiedByIndex;
-
-                if((charIndexTo < 24 && isPlayer1Turn) || (charIndexTo >= 24 && !isPlayer1Turn)){//destination has a character from the same player
-                    actualGame();
-                }
-
-
-                if((charIndexTo < 24 && !isPlayer1Turn) || (charIndexTo >= 24 && isPlayer1Turn)){//destination has a character from the opposing player
-                    //attack(characterList[selectedFrom],characterList[selectedTo]);
-                    Characters* attacker = characterList[selectedFrom];
-                    Characters* defender = characterList[selectedTo];
-                    int moveAttackerHere;
-
-                    attacker->attack(*defender);
-                    if(defender->health <= 0){//if defender is unalived
-                        m_tilesB[selectedTo]->setIcon(QIcon());
-                        tilesList[selectedTo].occupiedByIndex = 100;
-                    }
-                    else if(attacker->health <= 0){//if attacker is unalived
-                        m_tilesB[selectedFrom]->setIcon(QIcon());
-                        tilesList[selectedFrom].occupiedByIndex = 100;
-                    }
-                    else{//if neither is unalived
-                        moveAttackerHere = afterAttackMovement(selectedTo,tilesList[selectedFrom].type);
-
-                        m_tilesB[selectedFrom]->setIcon(QIcon());
-                        m_tilesB[moveAttackerHere]->setIcon(m_selectedIcon);
-
-                        tilesList[moveAttackerHere].type = tilesList[selectedFrom].type ;
-                        tilesList[selectedFrom].type = 100;
-
-                        tilesList[moveAttackerHere].occupiedByIndex = tilesList[selectedFrom].occupiedByIndex;
-                        tilesList[selectedFrom].occupiedByIndex = 100;
-                    }
-                }
-            });
-        }
-
-
-        gameOver(isPlayer1Turn);
-
-        //for (int i = 0; i < 41; ++i) {}
-    }
-
-        if(player1.playerCharacters.empty()){
-            ui->label_gameover->show();
-            ui->label_gameover->setText("GAME OVER!\n"
-                                        +player1.name+"won");
-        }
-        else if(player2.playerCharacters.empty()){
-            ui->label_gameover->show();
-            ui->label_gameover->setText("GAME OVER!\n"
-                                        +player2.name+"won");
-        }
-
-}*/
-
-
-/*void mapWindow::on_pushButton_B02_clicked()
-{
-    can(18,characterList[18]->type,1);
-}*/
-
-
-
-
-
-
-
+//this is for when both survive or only the attacker lives to tell the tale
 int mapWindow::afterAttackMovement(int defenderIndex,int attackerType){
     QQueue<int> neighbors;
     int centerX = m_tilesB[defenderIndex]->geometry().center().x();
     int centerY = m_tilesB[defenderIndex]->geometry().center().y();
     int targetX,targetY;
     int qSize;
-
-
-
 
     for(int i=0 ; i<41;i++){
         targetX = m_tilesB[i]->geometry().center().x();
@@ -1557,9 +1272,7 @@ int mapWindow::afterAttackMovement(int defenderIndex,int attackerType){
 
         int distanceSquared = dx * dx + dy * dy;
 
-
-
-        if(distanceSquared <= 135){
+        if(distanceSquared <= 135*135 && distanceSquared != 0 && tilesList[i].isEmpty){
             if(attackerType == 1 || attackerType == 4){//grounded or flying
                 if(tilesList[i].landscape == 3){//is land
                     neighbors.enqueue(i);
@@ -1577,7 +1290,12 @@ int mapWindow::afterAttackMovement(int defenderIndex,int attackerType){
     }
 
     qSize = neighbors.size();
+    for(int i=0;i<qSize;i++){
+        qDebug()<<"theses are the neighbors after attack movement"<<neighbors[i];
+    }
     int randomValue = QRandomGenerator::global()->bounded(qSize);
+
+    qDebug()<<"this is the chosen cell for movement????????!!!!!"<<neighbors[randomValue];
 
     return neighbors[randomValue];
 }
@@ -1585,7 +1303,7 @@ int mapWindow::afterAttackMovement(int defenderIndex,int attackerType){
 
 //to start a players turn, to enable only the btns that have a character from the player itself
 void mapWindow::startTurn() {
-    qDebug() <<"staet of start turn";
+    //qDebug() <<"staet of start turn";
 
 
     for(int i = 0; i < 41; ++i) {
@@ -1624,17 +1342,17 @@ void mapWindow::startTurn() {
 
             can(selectedFrom, tilesList[tileIndex].type, isPlayer1Turn);
 
-            qDebug() <<"this is the selected from"<< selectedFrom;
+            //qDebug() <<"this is the selected from"<< selectedFrom;
             toMove();
         });
     }
-    qDebug() <<"end of start turn";
+   // qDebug() <<"end of start turn";
 
 }
 
 //to move the character to the destination
 void mapWindow::toMove(){
-    qDebug() <<"staet of move to ";
+    //qDebug() <<"staet of move to ";
 
 
     for(int i = 0; i < 41; ++i) {
@@ -1652,13 +1370,16 @@ void mapWindow::toMove(){
     for(int i=0;i<41;i++){
         connect(m_tilesB[i], &QPushButton::clicked, this, [this, i]() {
             selectedTo = i;
-            qDebug() <<"this is the selected to"<< selectedTo;
+            //qDebug() <<"this is the selected to"<< selectedTo;
 
             int charIndexFrom = tilesList[selectedFrom].occupiedByIndex;
-            qDebug() << "this is character index from --> "<<charIndexFrom;
+            //qDebug() << "this is character index from --> "<<charIndexFrom;
 
             int charIndexTo = tilesList[selectedTo].occupiedByIndex;
-            qDebug() << "this is character index to --> "<<charIndexTo;
+            //qDebug() << "this is character index to --> "<<charIndexTo;
+
+            qDebug()<<"seleced From               "<<selectedFrom;
+            qDebug()<<"seleced to                 "<<selectedTo;
 
 
 
@@ -1687,8 +1408,8 @@ void mapWindow::toMove(){
 
                 m_tilesB[selectedTo]->setIconSize(m_tilesB[selectedTo]->size());
 
-                currentPlayer->playerTiles.removeOne(selectedFrom);
                 currentPlayer->playerTiles.push_back(selectedTo);
+                currentPlayer->playerTiles.removeOne(selectedFrom);
             }
 
             else if((charIndexTo < 24 && !isPlayer1Turn) || (charIndexTo >= 24 && charIndexTo < 48 && isPlayer1Turn)){//destination has a character from the opposing player
@@ -1699,53 +1420,143 @@ void mapWindow::toMove(){
                 Characters* defender = characterList[tilesList[selectedTo].occupiedByIndex];
                 int moveAttackerHere;
 
+                qDebug()<<"atacker hp b4"<<attacker->getHealth();
+                qDebug()<<"atacker dp b4"<<attacker->getDamage();
+                qDebug()<<"defender hp b4"<<defender->getHealth();
+                qDebug()<<"defender hp b4"<<defender->getDamage();
+
+
+
+
                 attacker->attack(*defender);
-                if(defender->health <= 0){//if defender is unalived
+
+                qDebug()<<"attacker hp after"<<attacker->getHealth();
+                qDebug()<<"defender hp after"<<defender->getHealth();
+
+                if(defender->health <= 0 && attacker->health > 0){//if defender is killed
                     qDebug() << "5th one ran";
+
+                    tilesList[selectedFrom].isEmpty = true;
+                    moveAttackerHere = afterAttackMovement(selectedTo,tilesList[selectedFrom].type);
+
+                    if(selectedFrom != moveAttackerHere){
+                        //abt attacker
+                        currentPlayer->playerTiles.push_back(moveAttackerHere);
+                        currentPlayer->playerTiles.removeOne(selectedFrom);
+                        //currentPlayer->playerCharactersIndex.push_back(tilesList[moveAttackerHere].occupiedByIndex);
+
+                        m_tilesB[moveAttackerHere]->setIcon(m_selectedIcon);
+                        tilesList[moveAttackerHere].occupiedByIndex = tilesList[selectedFrom].occupiedByIndex;
+                        tilesList[moveAttackerHere].type = tilesList[selectedFrom].type;
+                        tilesList[moveAttackerHere].isEmpty = false;
+                        m_tilesB[moveAttackerHere]->setIconSize(m_tilesB[selectedTo]->size());//idk is thic correct?
+
+
+                        //abt the mt cell attacker leaves behind
+                        currentPlayer->playerTiles.removeOne(selectedFrom);
+                        m_tilesB[selectedFrom]->setIcon(QIcon());
+                        tilesList[selectedFrom].occupiedByIndex = 100;
+                        tilesList[selectedFrom].type = 100;
+                    }
+
+                    else{
+                        tilesList[moveAttackerHere].isEmpty = false;
+                    }
+
+
+                    //abt defender
+                    otherPlayer->playerTiles.removeOne(selectedTo);
+                    otherPlayer->playerCharactersIndex.removeOne(tilesList[selectedTo].occupiedByIndex);
 
                     m_tilesB[selectedTo]->setIcon(QIcon());
                     tilesList[selectedTo].occupiedByIndex = 100;
                     tilesList[selectedTo].type = 100;
                     tilesList[selectedTo].isEmpty = true;
 
-                    moveAttackerHere = afterAttackMovement(selectedTo,tilesList[selectedFrom].type);
 
-                    otherPlayer->playerTiles.removeOne(selectedTo);
-                    otherPlayer->playerCharactersIndex.removeOne(tilesList[selectedTo].occupiedByIndex);
-                    currentPlayer->playerTiles.push_back(moveAttackerHere);
 
+                    qDebug()<<"defender died";
                 }
-                else if(attacker->health <= 0){//if attacker is unalived
+                else if(attacker->health <= 0 && defender->health > 0){//if attacker is killed
                     qDebug() << "6th one ran";
+
+                    //abt attacker
+                    currentPlayer->playerTiles.removeOne(selectedFrom);
+                    currentPlayer->playerCharactersIndex.removeOne(tilesList[selectedFrom].occupiedByIndex);
 
                     m_tilesB[selectedFrom]->setIcon(QIcon());
                     tilesList[selectedFrom].occupiedByIndex = 100;
                     tilesList[selectedFrom].type = 100;
                     tilesList[selectedFrom].isEmpty = true;
 
+                    //abt defender
+                    qDebug()<<"attacker died";
+
+                }
+                else if(attacker->health <= 0 && defender->health <= 0){//if both of them are killed
+                    qDebug() << "7th one ran";
+
+                    //abt attacker
                     currentPlayer->playerTiles.removeOne(selectedFrom);
                     currentPlayer->playerCharactersIndex.removeOne(tilesList[selectedFrom].occupiedByIndex);
 
+                    m_tilesB[selectedFrom]->setIcon(QIcon());
+                    tilesList[selectedFrom].occupiedByIndex = 100;
+                    tilesList[selectedFrom].type = 100;
+                    tilesList[selectedFrom].isEmpty = true;
+
+                    //abt defender
+                    otherPlayer->playerTiles.removeOne(selectedTo);
+                    otherPlayer->playerCharactersIndex.removeOne(tilesList[selectedTo].occupiedByIndex);
+
+                    m_tilesB[selectedTo]->setIcon(QIcon());
+                    tilesList[selectedTo].occupiedByIndex = 100;
+                    tilesList[selectedTo].type = 100;
+                    tilesList[selectedTo].isEmpty = true;
+
+                    qDebug()<<"both died";
 
                 }
-                else{//if neither is unalived
-                    qDebug() << "7th one ran";
+                else if(attacker->health > 0 && defender->health > 0){//if neither is killed
+                    qDebug()<<"8th one ran";
 
+                    tilesList[selectedFrom].isEmpty = true;
                     moveAttackerHere = afterAttackMovement(selectedTo,tilesList[selectedFrom].type);
 
-                    m_tilesB[selectedFrom]->setIcon(QIcon());
-                    m_tilesB[moveAttackerHere]->setIcon(m_selectedIcon);
+                    if(selectedFrom != moveAttackerHere){
+                        //abt attacker
+                        currentPlayer->playerTiles.push_back(moveAttackerHere);
+                        m_tilesB[moveAttackerHere]->setIcon(m_selectedIcon);
+                        tilesList[moveAttackerHere].occupiedByIndex = tilesList[selectedFrom].occupiedByIndex;
+                        tilesList[moveAttackerHere].type = tilesList[selectedFrom].type;
+                        tilesList[moveAttackerHere].isEmpty = false;
+                        m_tilesB[moveAttackerHere]->setIconSize(m_tilesB[selectedFrom]->size());
 
-                    tilesList[moveAttackerHere].type = tilesList[selectedFrom].type ;
-                    tilesList[selectedFrom].type = 100;
 
-                    tilesList[moveAttackerHere].occupiedByIndex = tilesList[selectedFrom].occupiedByIndex;
-                    tilesList[selectedFrom].occupiedByIndex = 100;
+                        //abt defender
+
+
+                        //abt the mt cell attacker leaves behind
+                        currentPlayer->playerTiles.removeOne(selectedFrom);
+                        m_tilesB[selectedFrom]->setIcon(QIcon());
+                        tilesList[selectedFrom].occupiedByIndex = 100;
+                        tilesList[selectedFrom].type = 100;
+                    }
+
+                    else{
+                        tilesList[moveAttackerHere].isEmpty = false;
+                    }
+
+
+
+
+
+                    qDebug()<<"neither died";
+
+
                 }
             }
 
-            qDebug() << "this is character index of destination after change +-+-+-+-+-+-"<<tilesList[selectedTo].occupiedByIndex;
-            qDebug() << "this is character index of starting point after change +-+-+-+-+-+-"<<tilesList[selectedFrom].occupiedByIndex;
 
             if(selectedTo != -1){
                 for(int i=0;i<41;i++){
@@ -1756,18 +1567,23 @@ void mapWindow::toMove(){
                 }
                 actualGame();
             }
+
+
+
         });
     }
 
-    qDebug() <<"end of move to";
+    //qDebug() <<"end of move to";
 
 }
 
 
 void mapWindow::actualGame(){
 
-    qDebug() <<"staet of actual game";
+    //qDebug() <<"start of actual game";
 
+    qDebug() << "///////round///////"<<round;
+    round++;
     qDebug() << "--- Switching turns ---";
     qDebug() << "Current player:" << (isPlayer1Turn ? "Player 1" : "Player 2");
 
@@ -1777,26 +1593,16 @@ void mapWindow::actualGame(){
     qDebug() << "Player 2 tiles:" << player2.playerTiles;
 
 
+
     isPlayer1Turn = !isPlayer1Turn;
     qDebug() << "New current player:" << (isPlayer1Turn ? "Player 1" : "Player 2");
 
+    isPlayer1Turn?ui->label_whoseTurn->setText("player 1's turm"):ui->label_whoseTurn->setText("player 2's turn");
 
 
-    /*for(int i=0;i<41;i++){
-        qDebug() <<"this is the occupied by index of tiles ******"<< i << "   "<< tilesList[i].occupiedByIndex;
 
-    }*/
 
-    //qDebug() << "Player has" << currentPlayer->playerCharactersIndex.size() << "characters";
 
-    /*if(selectedFrom==-1 && selectedTo==-1){
-        for(int i=0;i<41;i++){
-            m_tilesB[i]->setEnabled(true);
-            QString currentStyle = m_tilesB[i]->styleSheet();
-            m_tilesB[i]->setStyleSheet(currentStyle + "border: 1.5px solid black;");
-
-        }
-    }*/
 
 
 
@@ -1819,6 +1625,6 @@ void mapWindow::actualGame(){
         gameOver();
     }
 
-    qDebug() <<"end of actual game";
+    //qDebug() <<"end of actual game";
 
 }
