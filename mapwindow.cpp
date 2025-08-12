@@ -525,6 +525,7 @@ void mapWindow::loadCustomFont() {
     ui->pushButton_p2all->setFont(groupBoxFont);
     ui->label_whoseTurn->setFont(buttonFont);
     ui->label_gameover->setFont(groupBoxFont);
+    ui->label_whoWon->setFont(groupBoxFont);
 
 }
 
@@ -1217,9 +1218,9 @@ void mapWindow::gameOver() {
 
     ui->groupBox_gameOver->show();
     if (isPlayer1Turn) {
-        ui->label_gameover->setText("GAME OVER!\n" + player1.name + " won");
+        ui->label_whoWon->setText("GAME OVER!\nPlayer 1 ( " + player1.name + " ) won");
     } else {
-        ui->label_gameover->setText("GAME OVER!\n" + player2.name + " won");
+        ui->label_whoWon->setText("GAME OVER!\nPlayer 2 ( " + player2.name + " ) won");
     }
 }
 

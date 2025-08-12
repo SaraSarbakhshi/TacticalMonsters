@@ -7623,10 +7623,10 @@ background:transparent;</string>
    <widget class="QGroupBox" name="groupBox_setting">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>160</y>
-      <width>341</width>
-      <height>331</height>
+      <x>270</x>
+      <y>600</y>
+      <width>321</width>
+      <height>151</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -7704,9 +7704,9 @@ border:3px dotted white;
     <property name="geometry">
      <rect>
       <x>330</x>
-      <y>130</y>
+      <y>139</y>
       <width>360</width>
-      <height>320</height>
+      <height>311</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -7748,6 +7748,19 @@ background:transparent;
      <property name="styleSheet">
       <string notr="true">border:transparent;
 background:transparent;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_whoWon">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>240</y>
+       <width>321</width>
+       <height>61</height>
+      </rect>
      </property>
      <property name="text">
       <string/>
@@ -7813,8 +7826,8 @@ background:transparent;</string>
    <zorder>label_whoseTurn</zorder>
    <zorder>groupBox_setting</zorder>
   </widget>
-  <zorder>groupBox_map</zorder>
   <zorder>groupBox_bigMap</zorder>
+  <zorder>groupBox_map</zorder>
   <zorder>groupBox_p1agents</zorder>
   <zorder>groupBox_p2agents</zorder>
  </widget>
